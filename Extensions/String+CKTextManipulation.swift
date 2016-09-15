@@ -98,6 +98,35 @@ extension String {
     }
     
     
+    // formats a phone number
+    func phoneFormat() -> String {
+        var numericString = self.stripNonNumeric()
+        var formattedString = ""
+        
+        if (numericString.characters.count == 11) {
+            formattedString = numericString.substringFromIndex(fromIndex: 0, characterCount: 1) + " " +
+                              "(" + numericString.substringFromIndex(fromIndex: 1, characterCount: 3) + ") " +
+                              numericString.substringFromIndex(fromIndex: 4, characterCount: 3) + "-" +
+                              numericString.substringFromIndex(fromIndex: 7, characterCount: 4)
+        }
+        else if (numericString.characters.count == 10) {
+            formattedString = "(" + numericString.substringFromIndex(fromIndex: 0, characterCount: 3) + ") " +
+                              numericString.substringFromIndex(fromIndex: 3, characterCount: 3) + "-" +
+                              numericString.substringFromIndex(fromIndex: 6, characterCount: 4)
+        }
+        else if (numericString.characters.count == 7) {
+            formattedString = numericString.substringFromIndex(fromIndex: 0, characterCount: 3) + "-" +
+                              numericString.substringFromIndex(fromIndex: 3, characterCount: 4)
+        }
+        else {
+            formattedString = self
+        }
+        
+        return formattedString
+    }
+    
+    
+    
     // returns another string depending on a condition
     func ifEqualTo(_ compareText: String, replaceWith replaceText: String) -> String {
         var text = self
