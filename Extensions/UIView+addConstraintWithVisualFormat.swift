@@ -217,6 +217,43 @@ extension UIView {
         
         return constraints
     }
+
+    
+    
+    func constraintAttachToView(view: UIView, side: CKViewConstraintAttachSide, withPadding padding: CGFloat) -> [NSLayoutConstraint] {
+        let metrics: [String: CGFloat] = [
+            "padding": padding
+        ]
+        
+        let views: [String: UIView] = [
+            "currentView": self,
+            "otherView": view
+        ]
+        
+        var constraintTexts = [String]()
+        
+        if (side == .top) {
+            constraintTexts.append("V:[currentView]-(padding)-[otherView]")
+        }
+        else if (side == .bottom) {
+            constraintTexts.append("V:[otherView]-(padding)-[currentView]")
+        }
+        else if (side == .left) {
+            constraintTexts.append("H:[otherView]-(padding)-[currentView]")
+        }
+        else if (side == .right) {
+            constraintTexts.append("H:[currentView]-(padding)-[otherView]")
+        }
+        
+        
+        let constraints = self.superview!.addMultipleConstraintsWithVisualFormat(
+            constraintTexts,
+            options: nil,
+            metrics: metrics,
+            views: views)
+        
+        return constraints
+    }
     
     
     

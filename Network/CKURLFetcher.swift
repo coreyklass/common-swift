@@ -104,6 +104,7 @@ class CKURLFetcher: NSObject, URLSessionDelegate {
             self.didFinishFetchingData(data: data, urlResponse: urlResponse, error: error)
         }
         
+        
         // execute the data fetch task
         dataTask.resume()
         
@@ -119,7 +120,6 @@ class CKURLFetcher: NSObject, URLSessionDelegate {
         self._responseError = (error as? NSError)
         
         self._isFetchRunning = false
-        
         
         // if an error was returned
         if (self.responseError != nil) {

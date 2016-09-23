@@ -26,6 +26,29 @@ extension FileManager {
     }
 
     
+    
+    // creates the directory if needed
+    func createDirectoryIfNeeded(url: URL) -> Error? {
+        let directoryExists = self.isDirectoryAtURL(url)
+        var returnError: Error?
+        
+        if (!directoryExists) {
+            do {
+                try self.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+            }
+            catch let error {
+                print("Error creating directory:")
+                print(error.localizedDescription)
+                
+                returnError = error
+            }
+        }
+        
+        return returnError
+    }
+    
+    
+    
 
     // removes an item at the URL, optionally recursively
     func removeItemAtURL(_ url: URL, recurse: Bool) -> Bool {
