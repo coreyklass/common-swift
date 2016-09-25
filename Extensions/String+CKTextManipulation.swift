@@ -126,6 +126,47 @@ extension String {
     }
     
     
+    // is the string alphanumeric
+    func isAlphaNumeric() -> Bool {
+        var returnVal = true
+        
+        if (self.characters.count > 0) {
+            let string = String(self.characters.first!).lowercased()
+            
+            let isLetter = (string >= "a") && (string <= "z")
+            let isNumber = (string >= "0") && (string <= "9")
+            
+            if (!isLetter && !isNumber) {
+                returnVal = false
+            }
+        }
+        
+        else {
+            returnVal = false
+        }
+        
+        return returnVal
+    }
+    
+    
+    // is the string whitespace
+    func isWhitespace() -> Bool {
+        var returnVal = false
+        
+        if (self.characters.count > 0) {
+            let string = String(self.characters.first!)
+            
+            returnVal = returnVal || (string == " ")
+            returnVal = returnVal || (string == "\n")
+            returnVal = returnVal || (string == "\r")
+            returnVal = returnVal || (string == "\t")
+        }
+        
+        return returnVal
+    }
+    
+    
+    
     
     // returns another string depending on a condition
     func ifEqualTo(_ compareText: String, replaceWith replaceText: String) -> String {
