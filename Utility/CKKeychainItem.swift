@@ -121,16 +121,16 @@ class CKKeychainItem: NSObject {
     fileprivate func newSearchDictionary() -> NSMutableDictionary {
         let dictionary = NSMutableDictionary()
         
-        dictionary.setObject(kSecClassGenericPassword, forKey: (kSecClass as String as String as NSCopying))
+        dictionary.setObject(kSecClassGenericPassword, forKey: (kSecClass as! NSCopying))
 
         let encodedIdentifier = self.identifier.data(using: String.Encoding.utf8)
-        dictionary.setObject(encodedIdentifier!, forKey: (kSecAttrGeneric as String as String as NSCopying))
-        dictionary.setObject(encodedIdentifier!, forKey: (kSecAttrAccount as String as String as NSCopying))
+        dictionary.setObject(encodedIdentifier!, forKey: (kSecAttrGeneric as! NSCopying))
+        dictionary.setObject(encodedIdentifier!, forKey: (kSecAttrAccount as! NSCopying))
 
-        dictionary.setObject(self.service, forKey: (kSecAttrService as String as String as NSCopying))
+        dictionary.setObject(self.service, forKey: (kSecAttrService as! NSCopying))
         
         if (self.accessGroup != nil) {
-            dictionary.setObject(self.accessGroup!, forKey: (kSecAttrAccessGroup as String as String as NSCopying))
+            dictionary.setObject(self.accessGroup!, forKey: (kSecAttrAccessGroup as! NSCopying))
         }
         
         return dictionary
@@ -142,10 +142,10 @@ class CKKeychainItem: NSObject {
         let searchDictionary = self.newSearchDictionary()
         
         // add search attributes
-        searchDictionary.setObject(kSecMatchLimitOne, forKey: (kSecMatchLimit as String as String as NSCopying))
+        searchDictionary.setObject(kSecMatchLimitOne, forKey: (kSecMatchLimit as! NSCopying))
         
         // Tell the search to only return the data
-        searchDictionary.setObject(kCFBooleanTrue, forKey: (kSecReturnData as String as String as NSCopying))
+        searchDictionary.setObject(kCFBooleanTrue, forKey: (kSecReturnData as! NSCopying))
 
         // where are we storing the result
         var result: Data?
@@ -163,19 +163,6 @@ class CKKeychainItem: NSObject {
             }
         }
         
-        /*
-        _ = withUnsafeMutablePointer(to: &result) {
-            $0.withMemoryRebound(to: CFTypeRef.self, capacity: 1, {
-                SecItemCopyMatching(searchDictionary, $0)
-            })
-        }
-        */
-        
-        /*
-        _ = withUnsafeMutablePointer(to: &result) {
-            SecItemCopyMatching(searchDictionary, UnsafeMutablePointer($0))
-        }
-        */
         
         return result
     }
@@ -202,7 +189,7 @@ class CKKeychainItem: NSObject {
                 let updateDictionary = NSMutableDictionary()
                 
                 let keychainValueData = self.keychainValue!.data(using: String.Encoding.utf8)
-                updateDictionary.setObject(keychainValueData!, forKey: (kSecValueData as String as String as NSCopying))
+                updateDictionary.setObject(keychainValueData!, forKey: (kSecValueData as! NSCopying))
                 
                 status = SecItemUpdate(searchDictionary, updateDictionary)
                 
@@ -222,7 +209,7 @@ class CKKeychainItem: NSObject {
             let searchDictionary = self.newSearchDictionary()
             
             let keychainValueData = self.keychainValue!.data(using: String.Encoding.utf8)
-            searchDictionary.setObject(keychainValueData!, forKey: (kSecValueData as String as String as NSCopying))
+            searchDictionary.setObject(keychainValueData!, forKey: (kSecValueData as! NSCopying))
             
             status = SecItemAdd(searchDictionary, nil)
 
