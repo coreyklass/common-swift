@@ -12,21 +12,28 @@ import Foundation
 
 extension Dictionary {
     
-    func toJson() -> String? {
-        var json: String?
-        var errorText: String?
+    
+    func toJsonData() -> Data? {
+        var jsonData: Data?
         
-        // convert the JSON object to text
+        // convert the JSON object to datda
         do {
-            let jsonData = try JSONSerialization.data(withJSONObject: self, options: JSONSerialization.WritingOptions(rawValue: 0))
-            json = String(data: jsonData, encoding: .utf8)
+            jsonData = try JSONSerialization.data(withJSONObject: self, options: JSONSerialization.WritingOptions(rawValue: 0))
         }
         catch let error {
-            errorText = error.localizedDescription
+            print("Error converting to JSON object:")
+            print(error.localizedDescription)
         }
-
-        if (errorText != nil) {
-            print("Error converting to JSON object:" + errorText!)
+        
+        return jsonData
+    }
+    
+    
+    func toJson() -> String? {
+        var json: String?
+        
+        if let jsonData = self.toJsonData() {
+            json = String(data: jsonData, encoding: .utf8)
         }
         
         return json
